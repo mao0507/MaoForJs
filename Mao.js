@@ -6,6 +6,9 @@ Mao = {
         console.log('分成兩個大項，有驗證功能、常用工具');
         console.log('驗證功能包含了 數字驗證、英文數字驗證、身分證驗證、Email驗證、市內電話驗證、手機格式驗證');
         console.log('常用工具包含 取得網址參數');
+        console.log('部分功能需引用 Jquery，請將Jquery掛載上去')
+        console.log('Jquery CDN : https://code.jquery.com/jquery-3.6.0.js')
+
     },
     //驗證功能
     verify: {
