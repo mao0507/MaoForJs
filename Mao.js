@@ -5,7 +5,7 @@ Mao = {
         console.clear();
         console.log('分成兩個大項，有驗證功能、常用工具');
         console.log('驗證功能包含了 數字驗證、英文數字驗證、身分證驗證、Email驗證、市內電話驗證、手機格式驗證');
-        console.log('常用工具包含 取得網址參數');
+        console.log('常用工具包含 取得網址參數、post、get、將數字四捨五路到小數點後兩位');
         console.log('部分功能需引用 Jquery，請將Jquery掛載上去')
         console.log('Jquery CDN : https://code.jquery.com/jquery-3.6.0.js')
 
@@ -134,6 +134,77 @@ Mao = {
             //回傳
             return 網址參數[key] ? 網址參數[key] : null;
         },
+        //post
+        post: function(data, Path) {
+            //Path 僅接受 字串
+            //data 僅接受object 物件 ,也可以上傳檔案 ，但是必須要有files 此key值
+            //上傳檔案必須有files 此key值
+            //data :{  files:''}
+
+
+            //宣告接收容器
+            let resultData
+
+            //建立一個formData
+            let formData = new formData();
+            //如果有檔案
+            if (data.files) {
+                for (let i = 0; i < data.files.length; i++) {
+                    formData.append('fileupload', data.files[i])
+                }
+            }
+            //填入參數
+            formData.append('JSON_data', JSON.stringify(data));
+
+            $.ajax({
+                url: Path,
+                data: formData,
+                method: 'post',
+                cache: false,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: function(result) {
+                    resultData = result;
+                },
+                error: function(e) {
+                    console.log('ajax 連接 ' + Path + ' 時發生錯誤，下列為送入變數以及回傳訊息：')
+                    console.log(data)
+                    console.log(e)
+                }
+            })
+
+            return resultData
+        },
+        //get
+        get: function(Path) {
+
+            //宣告接收容器
+            let resultData
+
+
+            $.ajax({
+                url: Path,
+                method: 'get',
+                dataType: 'json',
+                success: function(result) {
+                    resultData = result;
+                },
+                error: function(e) {
+                    console.log('ajax 連接 ' + Path + ' 時發生錯誤，下列為送入變數以及回傳訊息：')
+                    console.log(data)
+                    console.log(e)
+                }
+            });
+
+
+            return resultData
+        },
+        //將數字四捨五路到小數點後兩位
+        roundToTwo: function(num) {
+            return +(Math.round(num + "e+2") + "e-2");
+        }
+
     }
 
 }
